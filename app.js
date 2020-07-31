@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const siteRoutes = require("./api/sites/siteRoutes");
+const checkinRoutes = require("./api/checkin/checkinRoutes");
 
 const APP_PORT = process.env.APP_PORT || 3000;
 
@@ -42,6 +43,7 @@ app.use((req, res, next) => {
 
 // API - Routes
 app.use("/site", siteRoutes);
+app.use("/checkin", checkinRoutes);
 
 // Handle 404 - not found
 app.use((req, res, next) => {

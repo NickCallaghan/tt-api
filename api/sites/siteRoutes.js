@@ -9,7 +9,7 @@ const route = "site";
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const Site = require("../../models/site");
+const Site = require("../../models/siteModel");
 
 // ROUTE - Get All Sites
 router.get("/", (req, res, next) => {
