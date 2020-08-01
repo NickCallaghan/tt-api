@@ -8,7 +8,7 @@ const route = "checkin";
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const Checkin = require("../../models/checkinModel");
+const Checkin = require("../models/checkin");
 
 // GET - All Checkins
 router.get("/", async (req, res, next) => {
@@ -31,7 +31,6 @@ router.get("/", async (req, res, next) => {
 // GET - All checkins for a site
 router.get("/:siteId", async (req, res, next) => {
   const id = req.params.siteId;
-
   try {
     const checkins = await Checkin.find()
       .populate("site", "siteName siteCode")
