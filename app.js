@@ -5,9 +5,9 @@ const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const siteRoutes = require("./routes/site");
-const checkinRoutes = require("./routes/checkin");
-const userRoutes = require("./routes/user");
+const siteRoutes = require("./api/routes/site");
+const checkinRoutes = require("./api/routes/checkin");
+const userRoutes = require("./api/routes/user");
 
 const APP_PORT = process.env.APP_PORT || 3000;
 
