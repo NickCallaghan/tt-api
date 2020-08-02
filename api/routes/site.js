@@ -2,7 +2,6 @@ require("dotenv");
 
 const express = require("express");
 const router = express.Router();
-const Site = require("../models/site");
 
 // Middleware
 const checkAuth = require("../middleware/check-auth");
