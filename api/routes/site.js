@@ -11,6 +11,9 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Site = require("../models/site");
 
+// Middleware
+const checkAuth = require("../middleware/check-auth");
+
 // ROUTE - Get All Sites
 router.get("/", (req, res, next) => {
   Site.find()
@@ -67,7 +70,7 @@ router.get("/:siteId", (req, res, next) => {
 });
 
 // ROUTE - Create a new site
-router.post("/", (req, res, next) => {
+router.post("/", checkAuth, (req, res, next) => {
   const { siteCode, siteName } = req.body;
 
   // Create new site object
@@ -99,7 +102,7 @@ router.post("/", (req, res, next) => {
 });
 
 // ROUTE - PATCH - Update a site.
-router.patch("/:siteId", (req, res, next) => {
+router.patch("/:siteId", checkAuth, (req, res, next) => {
   const id = req.params.siteId;
   // Add prarmaters to an object to allow optional updating of different fields.
   const updateOpts = {};
@@ -129,7 +132,7 @@ router.patch("/:siteId", (req, res, next) => {
 });
 
 // ROUTE - Delete a site by ID
-router.delete("/:siteId", (req, res, next) => {
+router.delete("/:siteId", checkAuth, (req, res, next) => {
   const id = req.params.siteId;
   Site.remove({ _id: id })
     .exec()
