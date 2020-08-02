@@ -21,6 +21,7 @@ const DB_CONNCTION_STRING = `mongodb+srv://${DB_UNAME}:${DB_PASSWORD}@${DB_URL}/
 mongoose.connect(DB_CONNCTION_STRING, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
+  useCreateIndex: true,
 });
 
 // Logging and body parser

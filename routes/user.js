@@ -5,6 +5,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 // Mongoose Models
 const User = require("../models/user");
@@ -48,8 +49,39 @@ router.post("/signup", async (req, res, next) => {
   }
 });
 
-router.post("/signup", (req, res, next) => {
-  res.status(201).json({ message: "User Logged In" });
+// POST - Login and get token
+router.post("/login", async (req, res, next) => {
+  function authFailure() {
+    return res.status(401).json({ message: "Auth Failure" });
+  }
+
+  // Check if user exists
+  const user = await User.find({ userEmail: req.body.userEmail }).exec();
+  if (user.length < 1) authFailure();
+  // Check password matches hashed version
+  await bcrypt.compare(
+    req.body.userPassword,
+    user[0].userPassword,
+    async (err, same) => {
+      try {
+        if (!same) {
+          authFailure();
+        } else {
+          // Return token on success
+          const token = await jwt.sign(
+            { userEmail: user[0].userEmail },
+            process.env.JWT_SECRET,
+            {
+              expiresIn: "1h",
+            }
+          );
+          return res.status(201).json({ message: "Login successful", token });
+        }
+      } catch (err) {
+        res.status(500).json({ error: err });
+      }
+    }
+  );
 });
 
 module.exports = router;
