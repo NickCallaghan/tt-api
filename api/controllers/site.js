@@ -5,6 +5,7 @@ const APP_PORT = process.env.APP_PORT;
 const APP_BASEURL = process.env.APP_BASEURL;
 const url = `${APP_BASEURL}:${APP_PORT}`;
 const route = "site";
+const siteCodeHelper = require("../helpers/siteCode");
 
 module.exports.sites_get_all = async (req, res, next) => {
   try {
@@ -59,13 +60,13 @@ module.exports.get_site_by_id = async (req, res, next) => {
 
 module.exports.add_site = async (req, res, next) => {
   try {
-    const { siteCode, siteName } = req.body;
+    const { siteName } = req.body;
 
     // Create new site object
     const site = new Site({
       _id: new mongoose.Types.ObjectId(),
       createdAt: Date.now(),
-      siteCode,
+      siteCode: siteCodeHelper.generate(),
       siteName,
     });
 
